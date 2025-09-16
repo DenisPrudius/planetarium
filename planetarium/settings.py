@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "ticket",
     "show",
-    "sessions",
+    "show_sessions",
 ]
 
 MIDDLEWARE = [
