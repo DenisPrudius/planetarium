@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import ShowSession, PlanetariumDome
 
-# Register your models here.
+admin.site.register(ShowSession)
+admin.site.register(PlanetariumDome)

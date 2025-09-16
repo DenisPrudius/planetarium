@@ -1,3 +1,5 @@
 from django.contrib import admin
+from.models import ShowTheme, AstronomyShow
 
-# Register your models here.
+admin.site.register(ShowTheme)
+admin.site.register(AstronomyShow)
