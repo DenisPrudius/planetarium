@@ -7,7 +7,7 @@ User = get_user_model()
 class Ticket(models.Model):
     row = models.PositiveIntegerField()
     seat = models.PositiveIntegerField()
-    show_session = models.ForeignKey("ShowSession", on_delete=models.CASCADE, related_name="tickets")
+    show_session = models.ForeignKey("show_sessions.ShowSession", on_delete=models.CASCADE, related_name="tickets")
     reservation = models.ForeignKey("Reservation", on_delete=models.CASCADE, related_name="tickets", null=True, blank=True)
 
     def __str__(self):
