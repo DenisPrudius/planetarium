@@ -3,11 +3,12 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
+from planetarium.mixins import ActionSerializerPermissionMixin
 from show_sessions.models import ShowSession
 from show_sessions.serializers import ShowSessionListSerializer, ShowSessionCreateSerializer
 
 
-class ShowSessionViewSet(viewsets.ModelViewSet):
+class ShowSessionViewSet(ActionSerializerPermissionMixin, viewsets.ModelViewSet):
     queryset = ShowSession.objects.select_related("astronomy_show", "planetarium_dome").all()
     serializer_class = ShowSessionListSerializer
     permission_classes = [IsAuthenticated]
@@ -16,6 +17,8 @@ class ShowSessionViewSet(viewsets.ModelViewSet):
         "list": ShowSessionListSerializer,
         "retrieve": ShowSessionListSerializer,
         "create": ShowSessionCreateSerializer,
+        "update": ShowSessionCreateSerializer,
+        "partial_update": ShowSessionCreateSerializer,
     }
 
     action_permission_classes = {
