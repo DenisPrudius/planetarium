@@ -1,4 +1,6 @@
+import django_filters
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
@@ -8,10 +10,20 @@ from .serializers import AstronomyShowListSerializer, AstronomyShowDetailSeriali
 from show.models import AstronomyShow
 
 
+
+class AstronomyShowFilter(django_filters.FilterSet):
+    themes = django_filters.BaseInFilter(field_name="themes__id", lookup_expr='in')
+
+    class Meta:
+        model = AstronomyShow
+        fields = ['themes']
+
 class AstronomyShowViewSet(ActionSerializerPermissionMixin, viewsets.ModelViewSet):
     queryset = AstronomyShow.objects.all()
     serializer_class = AstronomyShowDetailSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = AstronomyShowFilter
 
     action_serializer_classes = {
         "list": AstronomyShowListSerializer,
@@ -25,3 +37,4 @@ class AstronomyShowViewSet(ActionSerializerPermissionMixin, viewsets.ModelViewSe
     action_permission_classes = {
         "destroy": [IsAdminUser],
     }
+
