@@ -22,5 +22,6 @@ urlpatterns = [
     path("api/shows/", include("show.urls", namespace="show")),
     path("api/show_sessions/", include("show_sessions.urls", namespace="show_session")),
     path("api/tickets/", include("ticket.urls", namespace="ticket")),
+    path("api/users/", include("users.urls", namespace="user")),
 
 ]
