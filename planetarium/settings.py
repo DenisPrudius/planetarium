@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "show",
     "show_sessions",
     "users",
+    "rest_framework.authtoken",
 ]
 
 REST_FRAMEWORK = {
