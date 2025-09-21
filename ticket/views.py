@@ -1,6 +1,5 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from planetarium.mixins import ActionSerializerPermissionMixin
 from ticket.models import Reservation, Ticket
