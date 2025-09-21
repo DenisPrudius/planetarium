@@ -30,5 +30,14 @@ class ShowSessionViewSet(ActionSerializerPermissionMixin, viewsets.ModelViewSet)
         session = self.get_object()
         dome = session.planetarium_dome
         total = dome.rows * dome.seats_in_row
-        booked = session.tickets.count()
-        return Response({"total_seats": total, "booked": booked, "available": total - booked})
+
+        booked_tickets = session.tickets.all()
+
+        booked = [{"row": t.row, "seat": t.seat} for t in booked_tickets]
+
+        return Response({
+            "total_seats": total,
+            "booked_count": len(booked),
+            "booked_seats": booked,
+            "available": total - len(booked)
+        })
