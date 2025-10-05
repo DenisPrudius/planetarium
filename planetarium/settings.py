@@ -9,18 +9,23 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(env_path)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-c%$a$om2v16q7)m#sa^tajl=c&8cz41-3!6j$&f$c$0tq9zdc7"
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-c%$a$om2v16q7)m#sa^tajl=c&8cz41-3!6j$&f$c$0tq9zdc7")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
