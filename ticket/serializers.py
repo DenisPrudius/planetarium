@@ -22,21 +22,25 @@ class ReservationSerializer(serializers.ModelSerializer):
         read_only_fields = ["user", "created_at"]
 
 class ReservationCreateSerializer(serializers.ModelSerializer):
-    tickets = TicketSerializer(many=True, read_only=False, allow_empty=False)
+    tickets = TicketSerializer(many=True, allow_empty=False)
+
     class Meta:
         model = Reservation
-        fields = ["id", "created_at", "tickets"]
+        fields = ["id", "tickets", "created_at"]
+        read_only_fields = ["id", "created_at"]
 
     def create(self, validated_data):
+        tickets_data = validated_data.pop("tickets")
+        reservation = Reservation.objects.create(user=self.context["request"].user)
         with transaction.atomic():
-            tickets_data = validated_data.pop("tickets")
-            reservation = Reservation.objects.create(**validated_data)
             for ticket_data in tickets_data:
                 Ticket.objects.create(reservation=reservation, **ticket_data)
-            return reservation
+        return reservation
 
 class ReservationDetailSerializer(serializers.ModelSerializer):
     tickets = TicketSerializer(many=True, read_only=False, allow_empty=False)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Reservation
         fields = ["id", "user", "created_at", "tickets"]
