@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 from planetarium.mixins import ActionSerializerPermissionMixin
 from ticket.models import Reservation, Ticket
@@ -33,7 +33,7 @@ class ReservationViewSet(ActionSerializerPermissionMixin, viewsets.ModelViewSet)
 class TicketViewSet(ActionSerializerPermissionMixin, viewsets.ModelViewSet):
     queryset = Ticket.objects.select_related("show_session", "reservation").all()
     serializer_class = TicketSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     action_serializer_classes = {
         "list": TicketSerializer,
