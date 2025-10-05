@@ -22,6 +22,9 @@ class ShowSessionViewSet(ActionSerializerPermissionMixin, viewsets.ModelViewSet)
     }
 
     action_permission_classes = {
+        "create": [IsAdminUser],
+        "update": [IsAdminUser],
+        "partial_update": [IsAdminUser],
         "destroy": [IsAdminUser],
     }
 
