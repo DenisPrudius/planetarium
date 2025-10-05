@@ -16,21 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.permissions import AllowAny
-from rest_framework.routers import DefaultRouter
-from ticket.views import ReservationViewSet, TicketViewSet
-from show.views import AstronomyShowViewSet
-from show_sessions.views import ShowSessionViewSet
-
-router = DefaultRouter()
-router.APIRootView.permission_classes = [AllowAny]
-router.register("shows", AstronomyShowViewSet, basename="show")
-router.register("show-sessions", ShowSessionViewSet, basename="show_session")
-router.register("tickets", TicketViewSet, basename="ticket")
-router.register("reservations", ReservationViewSet, basename="reservation")
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/shows/", include("show.urls", namespace="show")),
+    path("api/show_sessions/", include("show_sessions.urls", namespace="show_session")),
+    path("api/tickets/", include("ticket.urls", namespace="ticket")),
     path("api/users/", include("users.urls", namespace="user")),
-    path("api/", include(router.urls)),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Optional UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
