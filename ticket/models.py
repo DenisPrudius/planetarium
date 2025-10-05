@@ -2,7 +2,7 @@ from django.contrib.sessions.models import Session
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models import UniqueConstraint
-from rest_framework.exceptions import ValidationError
+from django.core.exceptions import ValidationError
 
 User = get_user_model()
 
