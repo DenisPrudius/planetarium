@@ -16,12 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.permissions import AllowAny
 from rest_framework.routers import DefaultRouter
 from ticket.views import ReservationViewSet, TicketViewSet
 from show.views import AstronomyShowViewSet
 from show_sessions.views import ShowSessionViewSet
 
 router = DefaultRouter()
+router.APIRootView.permission_classes = [AllowAny]
 router.register("shows", AstronomyShowViewSet, basename="show")
 router.register("show-sessions", ShowSessionViewSet, basename="show_session")
 router.register("tickets", TicketViewSet, basename="ticket")
