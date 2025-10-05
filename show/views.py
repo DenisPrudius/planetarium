@@ -16,7 +16,7 @@ class AstronomyShowFilter(django_filters.FilterSet):
 
     class Meta:
         model = AstronomyShow
-        fields = ['themes']
+        fields = ["themes"]
 
 class AstronomyShowViewSet(ActionSerializerPermissionMixin, viewsets.ModelViewSet):
     queryset = AstronomyShow.objects.all()
@@ -35,6 +35,9 @@ class AstronomyShowViewSet(ActionSerializerPermissionMixin, viewsets.ModelViewSe
     }
 
     action_permission_classes = {
+        "create": [IsAdminUser],
+        "partial_update": [IsAdminUser],
+        "update": [IsAdminUser],
         "destroy": [IsAdminUser],
     }
 
